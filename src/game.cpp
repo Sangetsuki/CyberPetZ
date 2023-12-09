@@ -56,7 +56,7 @@ void render_mon_hungry(SDL_Renderer *renderer) {
 }
 
 void render_mon_thirsty(SDL_Renderer *renderer) {
-  SDL_Rect thirsty_bar = {700, 400 - 2 * mon.hungry, 20, mon.hungry * 2};
+  SDL_Rect thirsty_bar = {700, 400 - 2 * mon.thirsty, 20, mon.thirsty * 2};
   SDL_Rect thirsty_box = {700, 200, 20, 200};
 
   SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);

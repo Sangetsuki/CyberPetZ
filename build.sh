@@ -23,6 +23,6 @@ fi
 cd build
 cmake ..
 if [ -f "./compile_commands.json" ]; then
-	mv ./compile_commands.json ../
+	mv compile_commands.json ../
 fi
 make
