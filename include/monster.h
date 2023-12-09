@@ -1,6 +1,8 @@
 #ifndef MONSTER_H_GUARD
 #define MONSTER_H_GUARD
 
+enum MonsterID { MONID_PENGU = 0, MONID_PIDOL };
+
 // TODO: A good class
 class Monster {
 public:
@@ -12,8 +14,10 @@ public:
   ~Monster();
 
   void step(void);
-
+  bool writeToFile(void);
+  bool readFromFile(void);
   // private:
+  MonsterID species;
   short unsigned int healthy;
   short unsigned int hungry;
   short unsigned int thirsty;

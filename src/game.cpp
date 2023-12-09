@@ -18,9 +18,10 @@ Game::Game(const char *title, int width, int height, Uint32 flags) {
   assert(renderer != nullptr);
   running = true;
   start = SDL_GetTicks();
+  mon.readFromFile();
 
   const char *assets[] = {"assets/pf.png", "assets/pd.png"};
-  SDL_Surface *surface = IMG_Load(assets[start % 2]); // Bad but simple random
+  SDL_Surface *surface = IMG_Load(assets[mon.species]);
   texture = SDL_CreateTextureFromSurface(renderer, surface);
   SDL_FreeSurface(surface);
 
@@ -91,6 +92,7 @@ void Game::events(void) {
 
   if (event.type == SDL_QUIT) {
     running = false;
+    mon.writeToFile();
     return;
   }
 }
