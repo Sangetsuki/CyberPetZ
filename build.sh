@@ -21,7 +21,7 @@ if [ ! -d "./build" ]; then
 	mkdir build
 fi
 cd build
-cmake ..
+cmake .. $CMAKE_FLAGS
 if [ -f "./compile_commands.json" ]; then
 	mv compile_commands.json ../
 fi

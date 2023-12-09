@@ -1,10 +1,6 @@
 #ifndef MONSTER_H_GUARD
 #define MONSTER_H_GUARD
 
-#define ZEROUT 0x00000000
-#define MIDDLE 0x80000000
-#define MAXEDOUT 0xFFFFFFFF
-
 // TODO: A good class
 class Monster {
 public:
