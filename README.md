@@ -10,7 +10,6 @@ These build instructions are intended for Linux users, specifically Arch Linux. 
 - C++ compiler
 - CMake
 - SDL2 library
-- build-essential (for Debian/Ubuntu-based systems)
 
 **Installation Steps:**
 
@@ -23,6 +22,8 @@ These build instructions are intended for Linux users, specifically Arch Linux. 
      ```
      sudo apt-get install build-essential cmake libsdl2-dev
      ```
+
+Feel free to add or modify the distribution-specific installation commands as needed.
 
 2. Clone the repository: `git clone https://github.com/Sangetsuki/CyberPetZ.git`
 
