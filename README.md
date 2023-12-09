@@ -1,4 +1,4 @@
-# TamagotchiZ
+# CyberPetZ
 
 A simple Tamagotchi clone created with C++ for practicing.
 
@@ -24,9 +24,9 @@ These build instructions are intended for Linux users, specifically Arch Linux. 
      sudo apt-get install build-essential cmake libsdl2-dev
      ```
 
-2. Clone the repository: `git clone https://github.com/Sangetsuki/TamagotchiZ.git`
+2. Clone the repository: `git clone https://github.com/Sangetsuki/CyberPetZ.git`
 
-3. Navigate to the project directory: `cd TamagotchiZ`
+3. Navigate to the project directory: `cd CyberPetZ`
 
 4. Compile the code: 
   ```bash
@@ -35,4 +35,4 @@ These build instructions are intended for Linux users, specifically Arch Linux. 
    cmake ..
    make
   ```
-  Run the executable: `./TamagotchiZ`
+  Run the executable: `./CyberPetZ`
