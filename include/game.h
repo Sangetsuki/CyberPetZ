@@ -2,6 +2,7 @@
 #define GAME_H_GUARD
 
 #include <SDL2/SDL.h>
+#include <scene.h>
 
 class Game {
 public:
@@ -19,6 +20,7 @@ public:
   bool isRunning() const;
 
 private:
+  Scene *scene;
   SDL_Window *window;
   SDL_Renderer *renderer;
   bool running;
