@@ -17,13 +17,13 @@ public:
 
   void step(void);
 
-private:
-  unsigned int healthy;
-  unsigned int hungry;
-  unsigned int thirsty;
-  unsigned int dirty;
-  unsigned int age;
-  unsigned int happy;
+  // private:
+  short unsigned int healthy;
+  short unsigned int hungry;
+  short unsigned int thirsty;
+  short unsigned int dirty;
+  short unsigned int age;
+  short unsigned int happy;
 };
 
 #endif // !MONSTER_H_GUARD

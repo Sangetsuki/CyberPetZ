@@ -1,19 +1,21 @@
 #include "monster.h"
 
-#define ONE_PER 42949672
-
 Monster::Monster()
-    : healthy(MIDDLE), dirty(MIDDLE), age(ZEROUT), hungry(MIDDLE),
-      thirsty(MIDDLE), happy(MIDDLE) {}
+    : healthy(100), dirty(0), age(0), hungry(0), thirsty(0), happy(100) {}
 
 Monster::~Monster() {}
 
-// Might make this a short and just use straight up the percentage
 void Monster::step(void) {
-  healthy -= ONE_PER;
-  dirty += ONE_PER;
-  age++;
-  happy -= ONE_PER;
-  hungry += ONE_PER;
-  thirsty += ONE_PER;
+  if (healthy > 0)
+    healthy--;
+
+  if (hungry < 100)
+    hungry++;
+
+  if (thirsty < 100)
+    thirsty++;
+
+  // dirty++;
+  // age++;
+  // happy--;
 }
