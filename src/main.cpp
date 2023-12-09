@@ -24,15 +24,7 @@ int main(int argc, char *argv[]) {
     unsigned int now = SDL_GetTicks();
     // idk why this runs x4 a frame but hell yeah
     if ((now - start) % 1000 == 0) {
-      mon.healthy--;
-      mon.dirty++;
-      mon.age++;
-      mon.happy--;
-      mon.hungry++;
-      mon.thirsty++;
-      SDL_Log(
-          "now = %u; start = %u; monster: health = %u; dirty = %u; age = %u\n",
-          now, start, mon.healthy, mon.dirty, mon.age);
+      mon.step();
     }
     SDL_PollEvent(&e);
 
