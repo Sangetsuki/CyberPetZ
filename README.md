@@ -31,9 +31,12 @@ Feel free to add or modify the distribution-specific installation commands as ne
 
 4. Compile the code: 
   ```bash
-   mkdir build
-   cd build
-   cmake ..
-   make
+  ./build.sh
   ```
-  Run the executable: `./CyberPetZ`
+  Run the executable: `build/CyberPetZ`
+
+**build.sh**
+[build.sh](./build.sh) contains some flags for different targets and objectives:
+- `-x` Removes the `build` directory
+- `-c` Generates `compile_commands.json` for Lsp (in my setup I use clangd)
+- `-d` Generates a executable with debugging symbols

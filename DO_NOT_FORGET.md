@@ -4,10 +4,12 @@ This list was generated with the help of [ChatGPT](https://chat.openai.com/), so
 
 ## 1. Pingufofo: A Fishing Penguin.
 
-## 2. Dinobot: Dinosaur and Robot Fusion (Totally not Agumon).
+## 2. Dinobot: Dinosaur Cyborg (Totally not Agumon).
+  - Becomes more and more robotic as it grows up.
 
 ## 3. Dark Raven.
    - **Inspiration:** Horror Themes (Vampires, Zombies, Frankenstein).
+   - Starts as a lifefull raven and grows into a undead.
 
 ## 5. Dracoblade, the Winged Knight.
   - Basically a dragon knight
@@ -21,7 +23,7 @@ This list was generated with the help of [ChatGPT](https://chat.openai.com/), so
 
 ## 8. Pirate Dolphin.
 
-**Upcoming on the List (To Develop):**
+# **Upcoming on the List (To Develop):**
 
 ## 9. Elephant
 ## 10. Monkey
