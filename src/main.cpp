@@ -19,16 +19,15 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  {
-    Game game("CyberPetZ", 800, 640, flags);
-
-    // TODO: Limit frame rate to 60 FPS
-    while (game.isRunning()) {
-      game.events();
-      game.update();
-      game.render();
-    }
+  game = new Game("CyberPetZ", 800, 640, flags);
+  // TODO: Limit frame rate to 60 FPS
+  while (game->isRunning()) {
+    game->events();
+    game->update();
+    game->render();
   }
+
+  delete game;
 
   IMG_Quit();
   SDL_Quit();

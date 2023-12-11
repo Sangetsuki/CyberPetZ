@@ -17,9 +17,9 @@ public:
   Scene &operator=(const Scene &) = default;
   ~Scene();
 
-  void events(SDL_Event);
-  void update(void);
-  void render(SDL_Renderer *);
+  void events(SDL_Event) const;
+  void update(void) const;
+  void render(SDL_Renderer *) const;
 
 private:
   EventsFunction eHandler;
@@ -27,6 +27,7 @@ private:
   RenderFunction renderer;
 };
 
-extern Scene TitleScreen;
+extern const Scene TitleScreen;
+extern Scene **currentScene;
 
 #endif // !SCENE_H_GUARD

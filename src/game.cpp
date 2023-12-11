@@ -7,6 +7,7 @@
 #include <monster.h>
 
 unsigned int start;
+Game *game = nullptr;
 
 Game::Game(const char *title, int width, int height, Uint32 flags) {
   window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED,
@@ -15,12 +16,13 @@ Game::Game(const char *title, int width, int height, Uint32 flags) {
   renderer = SDL_CreateRenderer(window, -1, 0);
   assert(renderer != nullptr);
   running = true;
-  SetupMainMenu(scene, renderer);
+  scene = new Scene(TitleScreen);
 
   SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 }
 
 Game::~Game() {
+  delete scene;
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 }

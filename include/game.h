@@ -19,11 +19,14 @@ public:
 
   bool isRunning() const;
 
-private:
   Scene *scene;
-  SDL_Window *window;
   SDL_Renderer *renderer;
+
+private:
+  SDL_Window *window;
   bool running;
 };
+
+extern Game *game;
 
 #endif // !GAME_H_GUARD
