@@ -1,6 +1,6 @@
+#include "game.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <game.h>
 #include <getopt.h>
 
 static const option arguments[] = {{"fullscreen", no_argument, NULL, 'f'}};

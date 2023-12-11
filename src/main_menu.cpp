@@ -1,8 +1,8 @@
+#include "main_menu.h"
 #include "game.h"
+#include "monster.h"
+#include "scene.h"
 #include <SDL_image.h>
-#include <main_menu.h>
-#include <monster.h>
-#include <scene.h>
 
 static Monster mon = Monster();
 extern unsigned int start;

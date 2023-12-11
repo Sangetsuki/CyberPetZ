@@ -1,7 +1,6 @@
 #include "monster.h"
 #include <cassert>
 #include <cstdio>
-#include <unistd.h>
 
 Monster::Monster()
     : healthy(100), dirty(0), age(0), hungry(0), thirsty(0), happy(100),

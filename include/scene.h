@@ -28,6 +28,5 @@ private:
 };
 
 extern const Scene TitleScreen;
-extern Scene **currentScene;
 
 #endif // !SCENE_H_GUARD

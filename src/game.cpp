@@ -1,10 +1,8 @@
+#include "game.h"
 #include "scene.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <cassert>
-#include <game.h>
-#include <main_menu.h>
-#include <monster.h>
 
 unsigned int start;
 Game *game = nullptr;
