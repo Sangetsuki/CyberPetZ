@@ -4,7 +4,7 @@ project(CyberPetZ)
 include_directories(include)
 
 add_executable(${PROJECT_NAME}
-  src/main.cpp src/monster.cpp src/game.cpp
+  src/main.cpp src/monster.cpp src/game.cpp src/save.cpp
   src/scene.cpp src/main_menu.cpp src/title_screen.cpp)
 
 find_package(SDL2 REQUIRED)

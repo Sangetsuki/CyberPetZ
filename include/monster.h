@@ -1,7 +1,7 @@
 #ifndef MONSTER_H_GUARD
 #define MONSTER_H_GUARD
 
-enum MonsterID { MONID_PENGU = 0, MONID_PIDOL };
+enum MonsterID { MONID_NONE = 0, MONID_PENGU, MONID_PIDOL };
 
 // TODO: A good class
 class Monster {
