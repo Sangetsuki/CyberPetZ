@@ -17,6 +17,7 @@ Game::Game(const char *title, int width, int height, Uint32 flags) {
   scene = new Scene(TitleScreen);
 
   SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+  SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 }
 
 Game::~Game() {
@@ -38,13 +39,13 @@ void Game::update(void) { scene->update(); }
 
 void Game::events(void) {
   SDL_Event event;
-  SDL_PollEvent(&event);
-
-  if (event.type == SDL_QUIT) {
-    running = false;
-    return;
+  while (SDL_PollEvent(&event)) {
+    if (event.type == SDL_QUIT) {
+      running = false;
+      return;
+    }
+    scene->events(&event);
   }
-  scene->events(event);
 }
 
 bool Game::isRunning() const { return running; }

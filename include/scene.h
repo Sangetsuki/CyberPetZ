@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <functional>
 
-using EventsFunction = std::function<void(SDL_Event)>;
+using EventsFunction = std::function<void(SDL_Event *)>;
 using UpdateFunction = std::function<void(void)>;
 using RenderFunction = std::function<void(SDL_Renderer *)>;
 
@@ -17,7 +17,7 @@ public:
   Scene &operator=(const Scene &) = default;
   ~Scene();
 
-  void events(SDL_Event) const;
+  void events(SDL_Event *) const;
   void update(void) const;
   void render(SDL_Renderer *) const;
 

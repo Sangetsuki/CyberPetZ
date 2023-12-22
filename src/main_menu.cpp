@@ -3,7 +3,9 @@
 #include "monster.h"
 #include "save.h"
 #include "scene.h"
+#include <SDL_blendmode.h>
 #include <SDL_image.h>
+#include <SDL_render.h>
 
 extern unsigned int start;
 static SDL_Texture *texture;
@@ -12,10 +14,36 @@ static const SDL_Rect dest{272, 192, 256, 256};
 
 static const char *const assets[] = {"assets/pf.png", "assets/pd.png"};
 
+static bool lightsoff = false;
+static unsigned short int fadecount = 0x00;
+#define FADE_NONE 0
+#define FADE_OUT 1
+#define FADE_IN 2
+static unsigned short fademode = FADE_NONE;
+
 static void MainMenuUpdate(void) {
+  if (fademode != FADE_NONE) { // fading
+    switch (fademode) {
+    case FADE_OUT:
+      if (fadecount == 0xFF) {
+        fademode = FADE_NONE;
+        break;
+      }
+      fadecount++;
+      break;
+    case FADE_IN:
+      if (fadecount == 0x00) {
+        fademode = FADE_NONE;
+        break;
+      }
+      fadecount--;
+      break;
+    }
+  }
+
   unsigned int now = SDL_GetTicks();
 
-  if ((now - start) % 1000 == 0) {
+  if (!lightsoff && (now - start) % 1000 == 0) {
     gSaveData->monster.step();
   }
 }
@@ -57,18 +85,43 @@ static void render_mon_thirsty(SDL_Renderer *renderer) {
 }
 
 static void MainMenuRender(SDL_Renderer *renderer) {
-  SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-  SDL_RenderClear(renderer);
-
-  SDL_RenderCopy(renderer, texture, &src, &dest);
-  render_mon_healthbar(renderer);
-  render_mon_hungry(renderer);
-  render_mon_thirsty(renderer);
+  if (fadecount != 0xFF) {
+    SDL_RenderCopy(renderer, texture, &src, &dest);
+    render_mon_healthbar(renderer);
+    render_mon_hungry(renderer);
+    render_mon_thirsty(renderer);
+  }
+  SDL_Rect mask = {0, 0, 800, 640};
+  SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, fadecount);
+  SDL_RenderFillRect(renderer, &mask);
 
   SDL_RenderPresent(renderer);
 }
 
-const Scene MainMenuScene(nullptr, MainMenuUpdate, MainMenuRender);
+static void MainMenuHandleEvents(SDL_Event *e) {
+
+  if (e->type != SDL_KEYUP || e->key.state != SDL_RELEASED)
+    return;
+
+  SDL_Log("Chegou um evento: %d", e->type);
+
+  switch (e->key.keysym.sym) {
+  case SDLK_SPACE:
+    lightsoff = !lightsoff;
+    if (lightsoff) {
+      fadecount = 0x00;
+      fademode = FADE_OUT;
+    } else {
+      fadecount = 0xFF;
+      fademode = FADE_IN;
+    }
+    break;
+  default:
+    break;
+  }
+}
+
+const Scene MainMenuScene(MainMenuHandleEvents, MainMenuUpdate, MainMenuRender);
 
 // MainMenu entry point from boot
 void SetupMainMenu() {

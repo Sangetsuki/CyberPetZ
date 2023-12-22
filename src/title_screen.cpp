@@ -13,15 +13,15 @@ static Uint32 color[] = {0x00, 0x00, 0x00};
 
 static Uint32 counter = 0;
 
-static void TitleScreenHandleEvents(SDL_Event event) {
+static void TitleScreenHandleEvents(SDL_Event *event) {
   SDL_Point mousepos;
-  if (event.type == SDL_MOUSEBUTTONUP) {
+  if (event->type == SDL_MOUSEBUTTONUP) {
     SDL_GetMouseState(&mousepos.x, &mousepos.y);
     if (gSaveExists && SDL_PointInRect(&mousepos, boxes + 2) &&
-        event.button.button == SDL_BUTTON_LEFT) {
+        event->button.button == SDL_BUTTON_LEFT) {
       SetupMainMenu();
     } else if (SDL_PointInRect(&mousepos, boxes + 1) &&
-               event.button.button == SDL_BUTTON_LEFT) {
+               event->button.button == SDL_BUTTON_LEFT) {
       gSaveData->monster = Monster();
       gSaveData->monster.species = MONID_PENGU;
       gSaveExists = true;
@@ -36,9 +36,6 @@ static void TitleScrenUpdater(void) {
   color[0] = 61 * cosine + 137;
   color[1] = 78 * cosine + 87;
   color[2] = 60 * cosine + 141;
-  SDL_Log("counter: %d, r: %d, g: %d, b: %d", counter, color[0], color[1],
-          color[2]);
-
   counter++;
 }
 

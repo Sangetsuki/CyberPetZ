@@ -5,7 +5,7 @@ Scene::Scene(EventsFunction ehndlr, UpdateFunction updtr, RenderFunction rndr)
 
 Scene::~Scene() {}
 
-void Scene::events(SDL_Event e) const {
+void Scene::events(SDL_Event *e) const {
   if (eHandler)
     eHandler(e);
 }
