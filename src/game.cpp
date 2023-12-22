@@ -1,4 +1,5 @@
 #include "game.h"
+#include "fader.h"
 #include "scene.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -31,11 +32,15 @@ void Game::render(void) {
   SDL_RenderClear(renderer);
 
   scene->render(renderer);
+  fader::RenderFader(renderer);
 
   SDL_RenderPresent(renderer);
 }
 
-void Game::update(void) { scene->update(); }
+void Game::update(void) {
+  fader::UpdateFader();
+  scene->update();
+}
 
 void Game::events(void) {
   SDL_Event event;
@@ -44,7 +49,8 @@ void Game::events(void) {
       running = false;
       return;
     }
-    scene->events(&event);
+    if (!fader::isFaderActive())
+      scene->events(&event);
   }
 }
 

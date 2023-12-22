@@ -5,7 +5,7 @@ include_directories(include)
 
 add_executable(${PROJECT_NAME}
   src/main.cpp src/monster.cpp src/game.cpp src/save.cpp
-  src/scene.cpp src/main_menu.cpp src/title_screen.cpp)
+  src/scene.cpp src/main_menu.cpp src/title_screen.cpp src/fader.cpp)
 
 find_package(SDL2 REQUIRED)
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})

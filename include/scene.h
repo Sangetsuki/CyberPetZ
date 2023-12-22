@@ -21,7 +21,6 @@ public:
   void update(void) const;
   void render(SDL_Renderer *) const;
 
-private:
   EventsFunction eHandler;
   UpdateFunction updater;
   RenderFunction renderer;

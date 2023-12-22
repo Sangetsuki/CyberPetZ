@@ -17,11 +17,11 @@ static void TitleScreenHandleEvents(SDL_Event *event) {
   SDL_Point mousepos;
   if (event->type == SDL_MOUSEBUTTONUP) {
     SDL_GetMouseState(&mousepos.x, &mousepos.y);
-    if (gSaveExists && SDL_PointInRect(&mousepos, boxes + 2) &&
-        event->button.button == SDL_BUTTON_LEFT) {
+    if (gSaveExists && SDL_PointInRect(&mousepos, &boxes[2]) &&
+        event->button.button == SDL_BUTTON_LEFT) { // CONTINUE
       SetupMainMenu();
-    } else if (SDL_PointInRect(&mousepos, boxes + 1) &&
-               event->button.button == SDL_BUTTON_LEFT) {
+    } else if (SDL_PointInRect(&mousepos, &boxes[1]) &&
+               event->button.button == SDL_BUTTON_LEFT) { // NEW GAME
       gSaveData->monster = Monster();
       gSaveData->monster.species = MONID_PENGU;
       gSaveExists = true;
@@ -31,7 +31,7 @@ static void TitleScreenHandleEvents(SDL_Event *event) {
 }
 
 static void TitleScrenUpdater(void) {
-  auto arg = (2 * M_PI / 512) * ((float)counter / 60);
+  float arg = (2 * M_PI / 512) * ((float)counter / 60);
   auto cosine = cos(arg);
   color[0] = 61 * cosine + 137;
   color[1] = 78 * cosine + 87;
