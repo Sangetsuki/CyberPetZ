@@ -4,20 +4,19 @@
 #include "monster.h"
 #include "save.h"
 #include "scene.h"
-#include <SDL_blendmode.h>
+#include "sprite.h"
 #include <SDL_image.h>
-#include <SDL_render.h>
 #include <cassert>
 
 extern unsigned int start;
-static SDL_Texture *texture;
 static const SDL_Rect src{0, 0, 1024, 1024};
 static const SDL_Rect dest{272, 192, 256, 256};
 
 static const char *const assets[] = {"assets/pf.png", "assets/pd.png"};
 
 static bool lightsoff = false;
-auto monster = &gSaveData->monster;
+static auto monster = &gSaveData->monster;
+static Sprite *monSprite = nullptr;
 
 static void MainMenuUpdate(void) {
   unsigned int now = SDL_GetTicks();
@@ -64,7 +63,7 @@ static void render_mon_thirsty(SDL_Renderer *renderer) {
 }
 
 static void MainMenuRender(SDL_Renderer *renderer) {
-  SDL_RenderCopy(renderer, texture, &src, &dest);
+  monSprite->Render(renderer, &src, &dest);
   render_mon_healthbar(renderer);
   render_mon_hungry(renderer);
   render_mon_thirsty(renderer);
@@ -72,7 +71,7 @@ static void MainMenuRender(SDL_Renderer *renderer) {
 
 static void MainMenuClean(void) {
   lightsoff = false;
-  SDL_DestroyTexture(texture);
+  delete monSprite;
 }
 
 static void MainMenuHandleEvents(SDL_Event *e) {
@@ -112,11 +111,8 @@ const Scene MainMenuScene(MainMenuHandleEvents, MainMenuUpdate, MainMenuRender);
 // MainMenu entry point from title screen
 void SetupMainMenu() {
   fader::ResetFader(fader::FADE_OUT);
-  SDL_Surface *surface = IMG_Load(assets[monster->species - 1]);
-  assert(surface != nullptr);
-  texture = SDL_CreateTextureFromSurface(game->renderer, surface);
-  assert(texture != nullptr);
-  SDL_FreeSurface(surface);
+  monSprite = new Sprite(assets[monster->species - 1]);
+  assert(monSprite != nullptr);
   *game->scene = MainMenuScene;
   fader::ResetFader(fader::FADE_IN);
 }

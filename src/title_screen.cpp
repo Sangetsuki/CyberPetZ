@@ -3,7 +3,6 @@
 #include "save.h"
 #include "scene.h"
 #include <SDL2/SDL.h>
-#include <SDL_render.h>
 #include <cmath>
 
 static const SDL_Rect boxes[] = {
