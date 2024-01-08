@@ -1,57 +1,37 @@
 #include "game.h"
-#include "fader.h"
 #include "scene.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <cassert>
+#include <raylib.h>
 
-unsigned int start;
+double start;
 Game *game = nullptr;
 
-Game::Game(const char *title, int width, int height, Uint32 flags) {
-  window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED,
-                            SDL_WINDOWPOS_CENTERED, width, height, flags);
-  assert(window != nullptr);
-  renderer = SDL_CreateRenderer(window, -1, 0);
-  assert(renderer != nullptr);
+Game::Game(const char *title, int width, int height, unsigned int flags) {
+  SetConfigFlags(flags);
+  InitWindow(width, height, title);
+
   running = true;
   scene = new Scene(TitleScreen);
 
-  SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-  SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+  ClearBackground(WHITE);
 }
 
 Game::~Game() {
   delete scene;
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
+  CloseWindow();
 }
 
 void Game::render(void) {
-  SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-  SDL_RenderClear(renderer);
+  ClearBackground(WHITE);
+  BeginDrawing();
 
-  scene->render(renderer);
-  fader::RenderFader(renderer);
+  DrawFPS(0, 0);
+  scene->render();
 
-  SDL_RenderPresent(renderer);
+  EndDrawing();
 }
 
-void Game::update(void) {
-  fader::UpdateFader();
-  scene->update();
-}
+void Game::update(void) { scene->update(); }
 
-void Game::events(void) {
-  SDL_Event event;
-  while (SDL_PollEvent(&event)) {
-    if (event.type == SDL_QUIT) {
-      running = false;
-      return;
-    }
-    if (!fader::isFaderActive())
-      scene->events(&event);
-  }
-}
+void Game::events(void) { scene->events(); }
 
-bool Game::isRunning() const { return running; }
+bool Game::isRunning() const { return running && !WindowShouldClose(); }

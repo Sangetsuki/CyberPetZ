@@ -9,18 +9,18 @@ These build instructions are intended for Linux users, specifically Arch Linux. 
 **Dependencies:**
 - C++ compiler
 - CMake
-- SDL2 library
+- [Raylib library](https://www.raylib.com/)
 
 **Installation Steps:**
 
 1. Install necessary dependencies:
    - For Arch Linux:
      ```
-     sudo pacman -S base-devel cmake sdl2
+     sudo pacman -S base-devel cmake raylib
      ```
    - For Debian/Ubuntu-based systems:
      ```
-     sudo apt-get install build-essential cmake libsdl2-dev
+     sudo apt-get install build-essential cmake libraylib-dev
      ```
 
 Feel free to add or modify the distribution-specific installation commands as needed.

@@ -1,7 +1,7 @@
 #ifndef SPRITE_H_GUARD
 #define SPRITE_H_GUARD
 
-#include <SDL2/SDL.h>
+#include <raylib.h>
 
 class Sprite {
 public:
@@ -12,11 +12,10 @@ public:
   Sprite &operator=(const Sprite &) = default;
   ~Sprite();
 
-  void Render(SDL_Renderer *renderer, const SDL_Rect *src,
-              const SDL_Rect *dest);
+  void Render(float x, float y);
 
 private:
-  SDL_Texture *texture;
+  Texture2D texture;
 };
 
 #endif // !SPRITE_H_GUARD

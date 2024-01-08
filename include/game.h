@@ -1,12 +1,11 @@
 #ifndef GAME_H_GUARD
 #define GAME_H_GUARD
 
-#include <SDL2/SDL.h>
-#include <scene.h>
+class Scene;
 
 class Game {
 public:
-  Game(const char *title, int width, int height, Uint32 flags);
+  Game(const char *title, int width, int height, unsigned int flags);
   Game(Game &&) = default;
   Game(const Game &) = default;
   Game &operator=(Game &&) = default;
@@ -20,10 +19,8 @@ public:
   bool isRunning() const;
 
   Scene *scene;
-  SDL_Renderer *renderer;
 
 private:
-  SDL_Window *window;
   bool running;
 };
 

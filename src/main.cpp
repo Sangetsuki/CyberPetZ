@@ -1,28 +1,26 @@
 #include "game.h"
 #include "save.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <cassert>
 #include <ctime>
 #include <getopt.h>
 #include <iostream>
+#include <raylib.h>
 
 static const option arguments[] = {{"fullscreen", no_argument, NULL, 'f'}};
 
 int main(int argc, char *argv[]) {
-  SDL_Init(SDL_INIT_EVERYTHING);
-  IMG_Init(IMG_INIT_PNG);
-
-  Uint32 flags = 0;
+  unsigned int flags = 0;
 
   char c;
   while ((c = getopt_long(argc, argv, "f", arguments, NULL)) != -1) {
     switch (c) {
     case 'f':
-      flags |= SDL_WINDOW_FULLSCREEN;
+      flags |= FLAG_FULLSCREEN_MODE;
     }
   }
 
   game = new Game("CyberPetZ", 800, 640, flags);
+  assert(game);
   gSaveData->readFile();
   if (gSaveExists) {
     std::time_t now = std::time(nullptr);
@@ -35,7 +33,8 @@ int main(int argc, char *argv[]) {
     std::cout << timestring;
   }
 
-  // TODO: Limit frame rate to 60 FPS
+  SetTargetFPS(60);
+  SetExitKey(KEY_NULL);
   while (game->isRunning()) {
     game->events();
     game->update();
@@ -49,7 +48,5 @@ int main(int argc, char *argv[]) {
 
   delete game;
 
-  IMG_Quit();
-  SDL_Quit();
   return 0;
 }
