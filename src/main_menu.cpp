@@ -57,6 +57,7 @@ static void MainMenuRender() {
   render_mon_healthbar();
   render_mon_hungry();
   render_mon_thirsty();
+  DrawText(monster->name, 260, 460, 20, BLACK);
 }
 
 static void MainMenuClean(void) {

@@ -7,6 +7,7 @@ enum MonsterID { MONID_NONE = 0, MONID_PENGU, MONID_PIDOL };
 class Monster {
 public:
   Monster();
+  Monster(const char n[12]);
   Monster(Monster &&) = default;
   Monster(const Monster &) = default;
   Monster &operator=(Monster &&) = default;
@@ -24,6 +25,7 @@ public:
   short unsigned int dirty;
   short unsigned int age;
   short unsigned int happy;
+  char name[12];
 };
 
 #endif // !MONSTER_H_GUARD
