@@ -1,5 +1,6 @@
 #include "main_menu.h"
 #include "game.h"
+#include "gui.h"
 #include "monster.h"
 #include "save.h"
 #include "scene.h"
@@ -22,41 +23,14 @@ static void MainMenuUpdate(void) {
   }
 }
 
-static void render_mon_healthbar() {
-  const Rectangle health_bar = {600,
-                                static_cast<float>(400 - 2 * monster->healthy),
-                                20, static_cast<float>(monster->healthy * 2)};
-  const Rectangle health_box = {600, 200, 20, 200};
-
-  DrawRectangleRec(health_bar, RED);
-  DrawRectangleLinesEx(health_box, 1.0, BLACK);
-}
-
-static void render_mon_hungry() {
-  const Rectangle hungry_bar = {650,
-                                static_cast<float>(400 - 2 * monster->hungry),
-                                20, static_cast<float>(monster->hungry * 2)};
-  const Rectangle hungry_box = {650, 200, 20, 200};
-
-  DrawRectangleRec(hungry_bar, GREEN);
-  DrawRectangleLinesEx(hungry_box, 1.0, BLACK);
-}
-
-static void render_mon_thirsty() {
-  const Rectangle thirsty_bar = {700,
-                                 static_cast<float>(400 - 2 * monster->thirsty),
-                                 20, static_cast<float>(monster->thirsty * 2)};
-  const Rectangle thirsty_box = {700, 200, 20, 200};
-
-  DrawRectangleRec(thirsty_bar, BLUE);
-  DrawRectangleLinesEx(thirsty_box, 1.0, BLACK);
-}
-
 static void MainMenuRender() {
   monSprite->Render(200, 200);
-  render_mon_healthbar();
-  render_mon_hungry();
-  render_mon_thirsty();
+  RenderVerticalProgressBar(600, 200, 20, 200,
+                            static_cast<float>(monster->healthy) / 100, RED);
+  RenderVerticalProgressBar(650, 200, 20, 250,
+                            static_cast<float>(monster->hungry) / 100, GREEN);
+  RenderVerticalProgressBar(700, 200, 20, 300,
+                            static_cast<float>(monster->thirsty) / 100, BLUE);
   DrawText(monster->name, 260, 460, 20, BLACK);
 }
 
