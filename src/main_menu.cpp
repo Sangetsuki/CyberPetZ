@@ -8,6 +8,8 @@
 #include <cassert>
 #include <raylib.h>
 
+using namespace gui;
+
 static const char *const assets[] = {"assets/pf.png", "assets/pd.png"};
 
 static bool lightsoff = false;
@@ -27,9 +29,9 @@ static void MainMenuRender() {
   monSprite->Render(200, 200);
   RenderVerticalProgressBar(600, 200, 20, 200,
                             static_cast<float>(monster->healthy) / 100, RED);
-  RenderVerticalProgressBar(650, 200, 20, 250,
+  RenderVerticalProgressBar(650, 200, 20, 200,
                             static_cast<float>(monster->hungry) / 100, GREEN);
-  RenderVerticalProgressBar(700, 200, 20, 300,
+  RenderVerticalProgressBar(700, 200, 20, 200,
                             static_cast<float>(monster->thirsty) / 100, BLUE);
   DrawText(monster->name, 260, 460, 20, BLACK);
 }
