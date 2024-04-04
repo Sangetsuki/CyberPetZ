@@ -17,12 +17,33 @@ static auto monster = &gSaveData->monster;
 static Sprite *monSprite = nullptr;
 static double lasttime = 0.0;
 
+static const Button eatbutton({100, 100, 150, 25}, "Alimentar", [] {
+  monster->hungry -= 10;
+  if (monster->hungry > 100)
+    monster->hungry = 0;
+});
+
+static const Button drinkbutton({100, 150, 150, 25}, "Dar agua", [] {
+  monster->thirsty -= 10;
+  if (monster->thirsty > 100)
+    monster->thirsty = 0;
+});
+
+static const Button hbutton({100, 200, 150, 25}, "Dar remedio", [] {
+  monster->healthy += 10;
+  if (monster->healthy > 100)
+    monster->healthy = 100;
+});
+
 static void MainMenuUpdate(void) {
   double now = GetTime();
   if (now - lasttime >= 1.0) {
     monster->step();
     lasttime = now;
   }
+  eatbutton.handleClick();
+  drinkbutton.handleClick();
+  hbutton.handleClick();
 }
 
 static void MainMenuRender() {
@@ -33,6 +54,9 @@ static void MainMenuRender() {
                             static_cast<float>(monster->hungry) / 100, GREEN);
   RenderVerticalProgressBar(700, 200, 20, 200,
                             static_cast<float>(monster->thirsty) / 100, BLUE);
+  eatbutton.render();
+  drinkbutton.render();
+  hbutton.render();
   DrawText(monster->name, 260, 460, 20, BLACK);
 }
 
