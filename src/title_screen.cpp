@@ -65,13 +65,6 @@ static void TitleScreenRender() {
     continue_btn.render();
   }
   if (typing) {
-    /* DrawRectangle(boxes[1].x, boxes[1].y - 20, boxes[1].width, 20, WHITE);
-     DrawRectangleLines(boxes[1].x, boxes[1].y - 20, boxes[1].width, 20, BLACK);
-     DrawText("Digite o nome do seu novo CyberPet:", boxes[1].x + 2,
-              boxes[1].y - 20 + 2, 18, BLACK);
-     DrawRectangleRec(boxes[1], WHITE);
-     DrawRectangleLinesEx(boxes[1], 1.0, BLACK);
-     DrawText(newname, boxes[1].x + 2, boxes[1].y + 2, 40, BLACK);*/
     new_monster_name.render();
   }
 }

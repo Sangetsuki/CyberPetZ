@@ -41,9 +41,6 @@ static void MainMenuUpdate(void) {
     monster->step();
     lasttime = now;
   }
-  eatbutton.handleClick();
-  drinkbutton.handleClick();
-  hbutton.handleClick();
 }
 
 static void MainMenuRender() {
@@ -63,6 +60,7 @@ static void MainMenuRender() {
 static void MainMenuClean(void) {
   lightsoff = false;
   delete monSprite;
+  game->scene = nullptr;
 }
 
 static void MainMenuHandleEvents() {
@@ -70,8 +68,12 @@ static void MainMenuHandleEvents() {
     lightsoff = !lightsoff;
   } else if (IsKeyReleased(KEY_Q)) {
     MainMenuClean();
-    *game->scene = TitleScreen;
+    game->scene = &TitleScreen;
+    return;
   }
+  eatbutton.handleClick();
+  drinkbutton.handleClick();
+  hbutton.handleClick();
 }
 
 const Scene MainMenuScene(MainMenuHandleEvents, MainMenuUpdate, MainMenuRender);
@@ -80,5 +82,5 @@ const Scene MainMenuScene(MainMenuHandleEvents, MainMenuUpdate, MainMenuRender);
 void SetupMainMenu() {
   monSprite = new Sprite(assets[monster->species - 1]);
   assert(monSprite != nullptr);
-  *game->scene = MainMenuScene;
+  game->scene = &MainMenuScene;
 }

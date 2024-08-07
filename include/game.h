@@ -18,7 +18,7 @@ public:
 
   bool isRunning() const;
 
-  Scene *scene;
+  const Scene *scene;
 
 private:
   bool running;
