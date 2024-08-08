@@ -2,6 +2,7 @@
 #include "game.h"
 #include "gui.h"
 #include "monster.h"
+#include "rpg.h"
 #include "save.h"
 #include "scene.h"
 #include "sprite.h"
@@ -10,12 +11,13 @@
 
 using namespace gui;
 
-static const char *const assets[] = {"assets/pf.png", "assets/pd.png"};
-
 static bool lightsoff = false;
 static auto monster = &gSaveData->monster;
 static Sprite *monSprite = nullptr;
 static double lasttime = 0.0;
+static bool text = false;
+
+static void MainMenuClean(void);
 
 static const Button eatbutton({100, 100, 150, 25}, "Alimentar", [] {
   monster->hungry -= 10;
@@ -33,6 +35,11 @@ static const Button hbutton({100, 200, 150, 25}, "Dar remedio", [] {
   monster->healthy += 10;
   if (monster->healthy > 100)
     monster->healthy = 100;
+});
+
+static const Button playbutton({100, 250, 150, 25}, "Jogar", [] {
+  MainMenuClean();
+  RpgMinigameSetup();
 });
 
 static void MainMenuUpdate(void) {
@@ -54,6 +61,7 @@ static void MainMenuRender() {
   eatbutton.render();
   drinkbutton.render();
   hbutton.render();
+  playbutton.render();
   DrawText(monster->name, 260, 460, 20, BLACK);
 }
 
@@ -74,13 +82,14 @@ static void MainMenuHandleEvents() {
   eatbutton.handleClick();
   drinkbutton.handleClick();
   hbutton.handleClick();
+  playbutton.handleClick();
 }
 
 const Scene MainMenuScene(MainMenuHandleEvents, MainMenuUpdate, MainMenuRender);
 
 // MainMenu entry point from title screen
 void SetupMainMenu() {
-  monSprite = new Sprite(assets[monster->species - 1]);
+  monSprite = createSaveMonSprite();
   assert(monSprite != nullptr);
   game->scene = &MainMenuScene;
 }

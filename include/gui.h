@@ -38,6 +38,8 @@ private:
   std::function<void(std::string)> onend;
 };
 
+void RenderHorizontalProgressBar(float x, float y, float w, float h,
+                                 float progress, Color color);
 void RenderVerticalProgressBar(float x, float y, float w, float h,
                                float progress, Color color);
 

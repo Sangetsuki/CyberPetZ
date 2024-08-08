@@ -18,4 +18,6 @@ private:
   Texture2D texture;
 };
 
+Sprite *createSaveMonSprite(void);
+
 #endif // !SPRITE_H_GUARD
