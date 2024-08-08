@@ -29,11 +29,11 @@ void gui::TextBox::render(void) const {
   Rectangle titlebox = {border.x, border.y - 4 * border.height / 5,
                         border.width, 4 * border.height / 5};
   DrawRectangleRec(titlebox, WHITE);
-  DrawRectangleLinesEx(titlebox, 1.0, BLACK);
-  DrawText(title.c_str(), titlebox.x + 1, titlebox.y + 1,
+  DrawRectangleLinesEx(titlebox, 1, BLACK);
+  DrawText(title.c_str(), titlebox.x + 2, titlebox.y + 2,
            4 * titlebox.height / 5, BLACK);
   DrawRectangleRec(border, WHITE);
-  DrawRectangleLinesEx(border, 1.0, BLACK);
+  DrawRectangleLinesEx(border, 1, BLACK);
   DrawText(currentText.c_str(), border.x + 2, border.y + 2,
            4 * border.height / 5, BLACK);
 }

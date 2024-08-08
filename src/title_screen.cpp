@@ -5,9 +5,9 @@
 #include "scene.h"
 #include <raylib.h>
 
-static const Rectangle boxes[] = {{150, 30, 400, 200}, {200, 300, 350, 50}};
+static const Rectangle boxes[] = {{150, 30, 400, 200}, {200, 300, 550, 50}};
 
-static Color color = {0x00, 0x00, 0x00};
+static Color color = BLACK;
 
 static unsigned int counter = 0;
 
