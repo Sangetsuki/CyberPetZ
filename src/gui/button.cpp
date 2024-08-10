@@ -7,6 +7,7 @@ gui::Button::Button(Rectangle _pos, std::string _text,
                               };
 
 void gui::Button::render(void) const {
+  DrawRectangleRec(pos, RAYWHITE);
   DrawRectangleLinesEx(pos, 1.0, BLACK);
   DrawText(text.c_str(), pos.x + pos.height / 5, pos.y + 2 * pos.height / 25,
            4 * pos.height / 5, BLACK);

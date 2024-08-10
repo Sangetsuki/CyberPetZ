@@ -12,7 +12,7 @@ Game::Game(const char *title, int width, int height, unsigned int flags) {
   running = true;
   scene = new Scene(TitleScreen);
 
-  ClearBackground(WHITE);
+  ClearBackground(LIGHTGRAY);
 }
 
 Game::~Game() {
@@ -21,7 +21,7 @@ Game::~Game() {
 }
 
 void Game::render(void) {
-  ClearBackground(WHITE);
+  ClearBackground(LIGHTGRAY);
   BeginDrawing();
 
   DrawFPS(0, 0);
