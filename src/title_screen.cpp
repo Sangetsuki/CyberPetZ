@@ -28,6 +28,7 @@ static gui::TextBox
                        gSaveData->monster = Monster(newname.c_str());
                        gSaveData->monster.species =
                            (MonsterID)((GetMouseX() * GetMouseY()) % 2 + 1);
+                       gSaveData->chips = 100;
                        gSaveExists = true;
                        SetupMainMenu();
                      });

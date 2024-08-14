@@ -9,6 +9,4 @@ public:
 private:
 };
 
-void RpgMinigameSetup();
-
 #endif // !RPG_H_GUARD

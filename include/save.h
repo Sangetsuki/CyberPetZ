@@ -8,6 +8,7 @@
 struct Save {
   Monster monster;
   std::time_t closed;
+  int chips;
 
   bool readFile(void);
   bool writeFile(void);

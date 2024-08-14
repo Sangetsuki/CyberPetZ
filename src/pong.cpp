@@ -1,5 +1,6 @@
 #include "game.h"
 #include "main_menu.h"
+#include "minigames.h"
 #include "scene.h"
 #include <raylib.h>
 #include <raymath.h>

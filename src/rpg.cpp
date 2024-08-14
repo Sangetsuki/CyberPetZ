@@ -2,6 +2,7 @@
 #include "game.h"
 #include "gui.h"
 #include "main_menu.h"
+#include "minigames.h"
 #include "save.h"
 #include "scene.h"
 #include "sprite.h"

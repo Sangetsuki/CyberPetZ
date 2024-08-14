@@ -1,9 +1,8 @@
 #include "main_menu.h"
 #include "game.h"
 #include "gui.h"
+#include "minigames.h"
 #include "monster.h"
-#include "pong.h"
-#include "rpg.h"
 #include "save.h"
 #include "scene.h"
 #include "sprite.h"
@@ -41,7 +40,8 @@ static const Button hbutton({100, 200, 150, 25}, "Dar remedio", [] {
 static const Button playbutton({100, 250, 150, 25}, "Jogar", [] {
   MainMenuClean();
   // RpgMinigameSetup();
-  SetupPongMinigame();
+  // SetupPongMinigame();
+  SlotsMinigameSetup();
 });
 
 static void MainMenuUpdate(void) {
