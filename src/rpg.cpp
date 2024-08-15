@@ -46,6 +46,7 @@ const Scene RpgMinigame(RpgMinigameEvents, RpgMinigameUpdater,
 
 static void RpgMinigameRender() {
   Rectangle msgbox = {0, 400, 400, 240};
+  DrawRectangleRec(msgbox, WHITE);
   DrawRectangleLinesEx(msgbox, 1.0, BLACK);
   DrawText("Você encontrou um esqueleto para batalhar!\nMas esse menu ainda "
            "não funciona :(\nAperte Q para sair.",

@@ -37,16 +37,46 @@ static const Button hbutton({100, 200, 150, 25}, "Dar remedio", [] {
     monster->healthy = 100;
 });
 
-static const Button playbutton({100, 250, 150, 25}, "Jogar", [] {
-  MainMenuClean();
-  // RpgMinigameSetup();
-  // SetupPongMinigame();
-  SlotsMinigameSetup();
-});
+struct {
+  Rectangle border;
+  Button games[3];
+  bool active;
+  void render() {
+    DrawRectangleRec(border, WHITE);
+    DrawRectangleLinesEx(border, 1.0, BLACK);
+    for (auto &button : games) {
+      button.render();
+    }
+  }
+  void events() {
+    for (auto &button : games) {
+      button.handleClick();
+    }
+  }
+} MinigamesBox = {{60, 120, 680, 240},
+                  {Button({70, 120 + 10, 120, 50}, "RPG",
+                          [] {
+                            MainMenuClean();
+                            RpgMinigameSetup();
+                          }),
+                   Button({200, 120 + 10, 120, 50}, "Pong",
+                          [] {
+                            MainMenuClean();
+                            SetupPongMinigame();
+                          }),
+                   Button({330, 120 + 10, 120, 50}, "Slots",
+                          [] {
+                            MainMenuClean();
+                            SlotsMinigameSetup();
+                          })},
+                  false};
+
+static const Button playbutton({100, 250, 150, 25}, "Jogar",
+                               [] { MinigamesBox.active = true; });
 
 static void MainMenuUpdate(void) {
   double now = GetTime();
-  if (now - lasttime >= 1.0) {
+  if (now - lasttime >= 1.0 && !MinigamesBox.active) {
     monster->step();
     lasttime = now;
   }
@@ -65,6 +95,9 @@ static void MainMenuRender() {
   hbutton.render();
   playbutton.render();
   DrawText(monster->name, 260, 460, 20, BLACK);
+  if (MinigamesBox.active) {
+    MinigamesBox.render();
+  }
 }
 
 static void MainMenuClean(void) {
@@ -77,14 +110,23 @@ static void MainMenuHandleEvents() {
   if (IsKeyReleased(KEY_SPACE)) {
     lightsoff = !lightsoff;
   } else if (IsKeyReleased(KEY_Q)) {
-    MainMenuClean();
-    game->scene = &TitleScreen;
+    if (MinigamesBox.active) {
+      MinigamesBox.active = false;
+    } else {
+      MainMenuClean();
+      game->scene = &TitleScreen;
+    }
     return;
   }
-  eatbutton.handleClick();
-  drinkbutton.handleClick();
-  hbutton.handleClick();
-  playbutton.handleClick();
+  if (MinigamesBox.active) {
+    MinigamesBox.events();
+
+  } else {
+    eatbutton.handleClick();
+    drinkbutton.handleClick();
+    hbutton.handleClick();
+    playbutton.handleClick();
+  }
 }
 
 const Scene MainMenuScene(MainMenuHandleEvents, MainMenuUpdate, MainMenuRender);
