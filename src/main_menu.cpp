@@ -39,7 +39,7 @@ static const Button hbutton({100, 200, 150, 25}, "Dar remedio", [] {
 
 struct {
   Rectangle border;
-  Button games[3];
+  Button games[4];
   bool active;
   void render() {
     DrawRectangleRec(border, WHITE);
@@ -68,6 +68,11 @@ struct {
                           [] {
                             MainMenuClean();
                             SlotsMinigameSetup();
+                          }),
+                   Button({460, 120 + 10, 120, 50}, "Xadrez",
+                          [] {
+                            MainMenuClean();
+                            SetupChessMinigame();
                           })},
                   false};
 
@@ -120,7 +125,6 @@ static void MainMenuHandleEvents() {
   }
   if (MinigamesBox.active) {
     MinigamesBox.events();
-
   } else {
     eatbutton.handleClick();
     drinkbutton.handleClick();
