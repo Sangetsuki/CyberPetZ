@@ -1,26 +1,11 @@
+#include "chess.h"
 #include "game.h"
 #include "minigames.h"
 #include "scene.h"
 #include <raylib.h>
 #include <raymath.h>
 
-enum ChessPieces {
-  CHESS_NONE = 0,
-  CHESS_PAWN_BLACK,
-  CHESS_PAWN_WHITE,
-  CHESS_HORSE_BLACK,
-  CHESS_HORSE_WHITE,
-  CHESS_ROOK_BLACK,
-  CHESS_ROOK_WHITE,
-  CHESS_BISHOP_BLACK,
-  CHESS_BISHOP_WHITE,
-  CHESS_QUEEN_BLACK,
-  CHESS_QUEEN_WHITE,
-  CHESS_KING_BLACK,
-  CHESS_KING_WHITE
-};
-
-char letters[] = {0, 'P', 'H', 'R', 'B', 'Q', 'K'};
+static const char letters[] = {0, 'P', 'H', 'R', 'B', 'Q', 'K'};
 
 ChessPieces board[64] = {
     CHESS_ROOK_BLACK, CHESS_HORSE_BLACK,  CHESS_BISHOP_BLACK, CHESS_QUEEN_BLACK,
@@ -45,6 +30,36 @@ static bool change_pos = false;
 static int index = -1;
 static int turn = 1;
 
+static union {
+  int value;
+  struct {
+    bool king_moved : 1;
+  };
+} flags;
+
+static bool isPathClear(int startPos, int endPos) {
+  int startRow = startPos / 8;
+  int startCol = startPos % 8;
+  int endRow = endPos / 8;
+  int endCol = endPos % 8;
+
+  int rowDirection = (endRow > startRow) ? 1 : (endRow < startRow) ? -1 : 0;
+  int colDirection = (endCol > startCol) ? 1 : (endCol < startCol) ? -1 : 0;
+
+  int currentRow = startRow + rowDirection;
+  int currentCol = startCol + colDirection;
+
+  while (currentRow != endRow || currentCol != endCol) {
+    int currentPos = currentRow * 8 + currentCol;
+    if (board[currentPos] != CHESS_NONE) {
+      return false; // Há uma peça no caminho
+    }
+    currentRow += rowDirection;
+    currentCol += colDirection;
+  }
+  return true; // Caminho livre
+}
+
 static bool isMoveValid(int src, int dest) {
   if (src >= 64 || src < 0 || dest >= 64 || dest < 0 ||
       board[src] == CHESS_NONE ||
@@ -60,18 +75,21 @@ static bool isMoveValid(int src, int dest) {
 
   switch (piece) {
   case CHESS_PAWN_BLACK:
+    if ((board[dest] != CHESS_NONE && board[dest] % 2 == 0 &&
+         (endRow - startRow == 1 && abs(endCol - startCol) == 1)) ||
+        (((endRow == startRow + 1 && startCol == endCol) ||
+          (startCol == endCol && startRow == 1 && endRow == 3)) &&
+         isPathClear(src, dest) && board[dest] == CHESS_NONE)) {
+      return true; // Movimento simples de Peão Preto
+    }
+    break;
   case CHESS_PAWN_WHITE:
-    // Exemplo para Peão: pode mover 1 casa para frente
-    if (piece == CHESS_PAWN_BLACK) {
-      if ((endRow == startRow + 1 && startCol == endCol) ||
-          (startCol == endCol && startRow == 1 && endRow == 3)) {
-        return true; // Movimento simples de Peão Preto
-      }
-    } else {
-      if (endRow == startRow - 1 && startCol == endCol ||
-          (startCol == endCol && startRow == 6 && endRow == 4)) {
-        return true; // Movimento simples de Peão Branco
-      }
+    if ((board[dest] != CHESS_NONE && board[dest] % 2 == 1 &&
+         (endRow - startRow == -1 && abs(endCol - startCol) == 1)) ||
+        ((endRow == startRow - 1 && startCol == endCol ||
+          (startCol == endCol && startRow == 6 && endRow == 4)) &&
+         isPathClear(src, dest) && (board[dest] == CHESS_NONE))) {
+      return true; // Movimento simples de Peão Branco
     }
     break;
 
@@ -87,7 +105,7 @@ static bool isMoveValid(int src, int dest) {
   case CHESS_ROOK_BLACK:
   case CHESS_ROOK_WHITE:
     // Exemplo para Torre: pode mover em linha reta
-    if (startRow == endRow || startCol == endCol) {
+    if ((startRow == endRow || startCol == endCol) && isPathClear(src, dest)) {
       return true;
     }
     break;
@@ -95,7 +113,8 @@ static bool isMoveValid(int src, int dest) {
   case CHESS_BISHOP_BLACK:
   case CHESS_BISHOP_WHITE:
     // Exemplo para Bispo: pode mover na diagonal
-    if (abs(startRow - endRow) == abs(startCol - endCol)) {
+    if (abs(startRow - endRow) == abs(startCol - endCol) &&
+        isPathClear(src, dest)) {
       return true;
     }
     break;
@@ -103,8 +122,9 @@ static bool isMoveValid(int src, int dest) {
   case CHESS_QUEEN_BLACK:
   case CHESS_QUEEN_WHITE:
     // Exemplo para Rainha: pode mover como Torre ou Bispo
-    if ((startRow == endRow || startCol == endCol) ||
-        (abs(startRow - endRow) == abs(startCol - endCol))) {
+    if (((startRow == endRow || startCol == endCol) ||
+         (abs(startRow - endRow) == abs(startCol - endCol))) &&
+        isPathClear(src, dest)) {
       return true;
     }
     break;
@@ -112,7 +132,8 @@ static bool isMoveValid(int src, int dest) {
   case CHESS_KING_BLACK:
   case CHESS_KING_WHITE:
     // Exemplo para Rei: pode mover uma casa em qualquer direção
-    if (abs(startRow - endRow) <= 1 && abs(startCol - endCol) <= 1) {
+    if (abs(startRow - endRow) <= 1 && abs(startCol - endCol) <= 1 &&
+        isPathClear(src, dest)) {
       return true;
     }
     break;
